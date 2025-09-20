@@ -6,43 +6,187 @@ public class LLImplementation<T>
     {
         public T? Value { get; set; }
         public Node? NextNode { get; set; }
+        public Node? PrevNode { get; set; }
         public Node(T? Value)
         {
             this.Value = Value;
-            NextNode = null;
+            NextNode = PrevNode = null;
         }
     }
 
-    private Node Head { get; set; }
-    public uint Count { get; set; }
+    private Node? Head { get; set; }
+    private Node? Tail { get; set; }
+    public uint Count { get; private set; }
 
 
     public LLImplementation()
     {
-        Head = new(default(T));
+        Head = Tail = null;
         Count = 0;
     }
 
-    public void InsertAtEnd(T Value)
+    // insert element at Count-th index
+    public void InsertAtTail(T value)
     {
-        Node newNode = new(Value);
+        Node newNode = new(value); // create new node
 
-        if (Count == 0)
+        if (Head == null || Tail == null)
         {
-            Head = newNode; // first node in the linked list
+            Head = Tail = newNode; // first node in the linked list
         }
         else
         {
-            // find last node and set NextNode to new node
-            Node tempNode = Head;
-            while (tempNode.NextNode != null)
-            {
-                tempNode = tempNode.NextNode;
-            }
-            tempNode.NextNode = newNode;
+            newNode.PrevNode = Tail;
+            Tail.NextNode = newNode;
+            Tail = newNode;
         }
 
         Count++;
+    }
+
+    // insert element at 0th index
+    public void InsertAtHead(T value)
+    {
+        Node newNode = new(value); // create new node
+        newNode.PrevNode = null; // First node, no previous node
+        newNode.NextNode = Head;
+
+        if (Head == null)
+        {
+            Tail = newNode;
+        }
+        else
+        {
+            Head.PrevNode = newNode;            
+        }
+
+        Head = newNode;
+        Count++;
+    }
+
+    // insert element at i-th position (0 based indexing)
+    public void InsertAtPosition(T value, uint position)
+    {
+        if (position > Count)
+            return;
+
+        if (position == Count)
+        {
+            InsertAtTail(value);
+        }
+        else if (position == 0)
+        {
+            InsertAtHead(value);
+        }
+        else
+        {
+            Node? targetNode = Head;
+            uint currentIndex = 0;
+
+            while (currentIndex < position && targetNode != null)
+            {
+                targetNode = targetNode.NextNode;
+                currentIndex++;
+            }
+
+            if (targetNode == null) return;
+
+            Node newNode = new(value);
+            newNode.PrevNode = targetNode.PrevNode;
+            newNode.NextNode = targetNode;
+
+            if (targetNode.PrevNode != null)
+            {
+                targetNode.PrevNode.NextNode = newNode;
+            }
+
+            targetNode.PrevNode = newNode;
+            Count++;
+        }
+    }
+
+    public void DeleteAtHead()
+    {
+        if (Head == null)
+            return;
+
+        Node? nextNode = Head.NextNode;
+        Head = nextNode;
+        if (Head == null)
+            Tail = null;
+        else
+            Head.PrevNode = null;
+        Count--;
+    }
+
+    public void DeleteAtTail()
+    {
+        if (Head == null)
+            return;
+
+        if (Tail == Head)
+        {
+            Head = Tail = null;
+        }
+        else
+        {
+            Tail = Tail?.PrevNode;
+            Tail!.NextNode = null;
+        }
+
+        Count--;
+    }
+
+    public void DeleteAtPosition(uint position)
+    {
+        if (position > Count)
+            return;
+
+        if (position == Count)
+        {
+            DeleteAtTail();
+        }
+        else if (position == 0)
+        {
+            DeleteAtHead();
+        }
+        else
+        {
+            Node? targetNode = Head;
+            uint currentIndex = 0;
+
+            while (currentIndex < position && targetNode != null)
+            {
+                targetNode = targetNode.NextNode;
+                currentIndex++;
+            }
+
+            if (targetNode == null) return;
+
+            if (targetNode.PrevNode != null) targetNode.PrevNode.NextNode = targetNode.NextNode;
+            if (targetNode.NextNode != null) targetNode.NextNode.PrevNode = targetNode.PrevNode;
+
+            Count--;
+        }
+    }
+
+    public bool Find(T value)
+    {
+        if (Head == null)
+            return false;
+
+        Node? tempNode = Head;
+
+        while (tempNode != null)
+        {
+            if (EqualityComparer<T>.Default.Equals(tempNode.Value, value))
+            {
+                return true;
+            }
+
+            tempNode = tempNode.NextNode;
+        }
+        return false;
     }
 
     public void Traverse()
@@ -65,7 +209,7 @@ public class LLImplementation<T>
         Console.Write('\n');
     }
 
-    private bool IsLastNode(Node node) => node.NextNode == null;
+    private bool IsLastNode(Node node) => node == Tail;
 }
 
 public static class LinkedList
@@ -75,26 +219,24 @@ public static class LinkedList
         LLImplementation<int> myList = new();
         Console.WriteLine($"myList length: {myList.Count}");
 
-        myList.InsertAtEnd(1);
-        Console.WriteLine($"myList length after insertion 1: {myList.Count}");
-        Console.WriteLine("myList after insertion 1");
-        myList.Traverse();
-
-        myList.InsertAtEnd(2);
-        Console.WriteLine($"myList length after insertion 2: {myList.Count}");
-        Console.WriteLine("myList after insertion 2");
-        myList.Traverse();
-
-        for (int i = 3; i <= 10; i++)
+        for (int i = 0; i < 10; i++)
         {
-            myList.InsertAtEnd(i);
+            myList.InsertAtTail(i);
         }
 
         Console.WriteLine($"myList length after multiple insertion: {myList.Count}");
         Console.WriteLine("myList after multiple insertion");
         myList.Traverse();
-        
 
-        // TODO: Insert at middle, deletion by index, element (can be used for deleteFirst, deleteLast), findByElement, findByIndex
+        Console.WriteLine($"myList length after insertion at position 2: {myList.Count}");
+        myList.InsertAtPosition(99, 11);
+
+        myList.Traverse();
+
+        myList.DeleteAtHead();
+        Console.WriteLine("List after deleting at head");
+        myList.Traverse();
+
+        // TODO: deletion by index, element (can be used for deleteFirst, deleteLast), findByElement, findByIndex
     }
 }
