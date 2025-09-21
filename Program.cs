@@ -7,7 +7,8 @@
             // Data structures
             // DS.DataTypes.Begin();
             // DS.Array.Begin();
-            DS.LinkedList.Begin();
+            // DS.LinkedList.Begin();
+            DS.Queue.Begin();
 
             // Algorithms
 

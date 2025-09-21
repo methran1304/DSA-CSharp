@@ -1,6 +1,7 @@
-﻿namespace DS;
+﻿using System.Collections;
+namespace DS;
 
-public class LLImplementation<T>
+public class LLImplementation<T> : IEnumerable<T>
 {
     private class Node
     {
@@ -142,7 +143,7 @@ public class LLImplementation<T>
         if (position > Count)
             return;
 
-        if (position == Count)
+        if (position == Count - 1)
         {
             DeleteAtTail();
         }
@@ -189,6 +190,22 @@ public class LLImplementation<T>
         return false;
     }
 
+    public T? GetHead()
+    {
+        if (Head == null)
+            return default(T);
+
+        return Head.Value;
+    }
+
+    public T? GetTail()
+    {
+        if (Tail == null)
+            return default(T);
+
+        return Tail.Value;
+    }
+
     public void Traverse()
     {
         if (Head == null)
@@ -210,6 +227,25 @@ public class LLImplementation<T>
     }
 
     private bool IsLastNode(Node node) => node == Tail;
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        Node? tempNode = Head;
+
+        while (tempNode != null)
+        {
+            if (tempNode.Value != null)
+            {
+                yield return tempNode.Value;
+            }
+            tempNode = tempNode.NextNode;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
 
 public static class LinkedList
