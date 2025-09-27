@@ -5,6 +5,7 @@ namespace DS;
 public class QueueImplementation<T>
 {
     private LLImplementation<T> List { get; set; }
+    public uint Count => List.Count;
 
     public QueueImplementation()
     {
@@ -24,24 +25,24 @@ public class QueueImplementation<T>
         return true;
     }
 
-    public T? GetHead()
+    public T? GetFront()
     {
         return List.GetHead();
     }
 
-    public T? GetTail()
+    public T? GetBack()
     {
         return List.GetTail();
     }
 
     public void Traverse()
     {
-        Console.Write("Head ");
+        Console.Write("Front ");
         foreach (T element in List)
         {
             Console.Write($"{element} ");
         }
-        Console.Write("Tail \n");
+        Console.Write("Back \n");
     }
 }
 

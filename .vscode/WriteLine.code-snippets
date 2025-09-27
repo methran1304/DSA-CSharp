@@ -19,7 +19,7 @@
 		"scope": "csharp",
 		"prefix": "writeline",
 		"body": [
-			"Console.WriteLine(\"$1\");"
+			"Console.WriteLine($1);"
 		],
 		"description": "Log output to console"
 	}

@@ -8,9 +8,11 @@
             // DS.DataTypes.Begin();
             // DS.Array.Begin();
             // DS.LinkedList.Begin();
-            DS.Queue.Begin();
+            // DS.Queue.Begin();
+            // DS.Stack.Begin();
+            DS.ArrayList.Begin();
 
-            // Algorithms
+            // Algorithms   
 
             // Search
             // Algorithms.Search.Begin();        
