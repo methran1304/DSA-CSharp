@@ -58,7 +58,7 @@ public class LLImplementation<T> : IEnumerable<T>
         }
         else
         {
-            Head.PrevNode = newNode;            
+            Head.PrevNode = newNode;
         }
 
         Head = newNode;

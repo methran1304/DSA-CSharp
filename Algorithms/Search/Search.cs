@@ -3,7 +3,7 @@
     public static class Search
     {
         // TC - O(n)
-        public static int LinearSearch(List<int> list, int value)
+        private static int LinearSearch(List<int> list, int value)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -17,7 +17,7 @@
         }
 
         // TC - O(log n)
-        public static int BinarySearch(List<int> list, int value)
+        private static int BinarySearch(List<int> list, int value)
         {
             int l = 0, r = list.Count - 1;
 
@@ -33,7 +33,7 @@
             return -1; // not found
         }
 
-        public static int CrystalBallProblem(List<bool> breaks)
+        private static int CrystalBallProblem(List<bool> breaks)
         {
             // jump sqrt(n) times and linear search nearest efficient point
             int jumpLength = (int)Math.Sqrt(breaks.Count);

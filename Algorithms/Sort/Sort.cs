@@ -2,7 +2,7 @@
 {
     public static class Sort
     {
-        public static void BubbleSort(int[] arr)
+        private static void BubbleSort(int[] arr)
         {
             int n = arr.Length;
 
@@ -24,7 +24,7 @@
             }
         }
 
-        public static void PrintArray(int[] arr)
+        private static void PrintArray(int[] arr)
         {
             foreach (int elem in arr)
             {

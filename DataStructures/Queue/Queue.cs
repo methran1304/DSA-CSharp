@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-
 namespace DS;
 
 public class QueueImplementation<T>

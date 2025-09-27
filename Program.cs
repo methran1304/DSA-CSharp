@@ -10,15 +10,14 @@
             // DS.LinkedList.Begin();
             // DS.Queue.Begin();
             // DS.Stack.Begin();
-            DS.ArrayList.Begin();
+            // DS.ArrayList.Begin();
 
             // Algorithms   
-
-            // Search
             // Algorithms.Search.Begin();        
-
-            // Sorting
             // Algorithms.Sort.Begin();
+
+            // Recursion
+            Algorithms.Recursion.Begin();
         }
     }
 }
