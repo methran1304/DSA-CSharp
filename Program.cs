@@ -17,7 +17,8 @@
             // Algorithms.Sort.Begin();
 
             // Recursion
-            Algorithms.Recursion.Begin();
+            // Algorithms.Recursion.Begin();
+            Algorithms.PathFind.Begin();
         }
     }
 }
